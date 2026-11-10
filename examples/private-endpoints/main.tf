@@ -31,7 +31,7 @@ resource "random_integer" "region_index" {
 # This ensures we have unique CAF compliant names for our resources.
 module "naming" {
   source  = "Azure/naming/azurerm"
-  version = ">= 0.3.0"
+  version = "0.4.3"
 }
 
 resource "azurerm_resource_group" "this" {
@@ -299,7 +299,7 @@ resource "azurerm_monitor_data_collection_rule_association" "example" {
 # Create resources for Azure Virtual Desktop Insights data collection rules
 module "avm_ptn_avd_lza_insights" {
   source  = "Azure/avm-ptn-avd-lza-insights/azurerm"
-  version = ">= 0.1.4"
+  version = "0.1.4"
 
   monitor_data_collection_rule_data_flow = [
     {

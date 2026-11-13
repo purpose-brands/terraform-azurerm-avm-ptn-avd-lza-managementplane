@@ -34,7 +34,6 @@ The following requirements are needed by this module:
 The following resources are used by this module:
 
 - [azurerm_role_assignment.avd_service_hostpool_reader](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
-- [azurerm_virtual_desktop_host_pool_registration_info.registrationinfo](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool_registration_info) (resource)
 - [azurerm_virtual_desktop_workspace_application_group_association.workappgrassoc](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_workspace_application_group_association) (resource)
 - [modtm_telemetry.telemetry](https://registry.terraform.io/providers/azure/modtm/latest/docs/resources/telemetry) (resource)
 - [random_uuid.example](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) (resource)
@@ -292,7 +291,7 @@ Default: `true`
 
 ### <a name="input_registration_expiration_period"></a> [registration\_expiration\_period](#input\_registration\_expiration\_period)
 
-Description: The expiration period for the registration token. Must be less than or equal to 30 days.
+Description: The expiration period for the registration token, passed to the host pool module. Must be less than or equal to 30 days. timeadd() accepts only h/m/s units, so express multi-day periods in hours (for example "648h" for 27 days).
 
 Type: `string`
 

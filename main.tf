@@ -22,6 +22,7 @@ module "avm_res_desktopvirtualization_hostpool" {
   }
   virtual_desktop_host_pool_start_vm_on_connect = var.virtual_desktop_host_pool_start_vm_on_connect
   virtual_desktop_host_pool_tags                = var.virtual_desktop_host_pool_tags
+  registration_expiration_period                = var.registration_expiration_period
 }
 
 
@@ -31,16 +32,15 @@ resource "time_sleep" "wait_for_hostpool" {
   depends_on = [module.avm_res_desktopvirtualization_hostpool]
 }
 
-# Registration information for the host pool.
-resource "azurerm_virtual_desktop_host_pool_registration_info" "registrationinfo" {
-  expiration_date = timeadd(timestamp(), var.registration_expiration_period)
-  hostpool_id     = module.avm_res_desktopvirtualization_hostpool.resource.id
+# The host pool module already owns the pool's registration token, and a pool has exactly one
+# (registrationInfo/default). A second resource here rotated that token in the same apply, so a
+# new session host could receive a token that was already invalid. Drop it from state without
+# deleting the shared token.
+removed {
+  from = azurerm_virtual_desktop_host_pool_registration_info.registrationinfo
 
   lifecycle {
-    ignore_changes = [
-      expiration_date,
-      hostpool_id,
-    ]
+    destroy = false
   }
 }
 

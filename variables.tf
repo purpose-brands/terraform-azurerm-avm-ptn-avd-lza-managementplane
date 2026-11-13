@@ -238,7 +238,7 @@ variable "public_network_access_enabled" {
 variable "registration_expiration_period" {
   type        = string
   default     = "48h"
-  description = "The expiration period for the registration token. Must be less than or equal to 30 days."
+  description = "The expiration period for the registration token, passed to the host pool module. Must be less than or equal to 30 days. timeadd() accepts only h/m/s units, so express multi-day periods in hours (for example \"648h\" for 27 days)."
 
   validation {
     condition = can(regex("^(\\d+)([smhdw])$", var.registration_expiration_period)) && (
